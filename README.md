@@ -1,8 +1,8 @@
 ![neuma-dart-header](https://res.cloudinary.com/dp3fqnmmg/image/upload/v1752827195/GitHub_-_Neuma_Base_Flutter_1_fpg9be.png)
 
-## ✨ What is Neuma API Dart?
+## ✨ What is Neuma API Flutter?
 
-**Neuma API Dart** is a powerful VS Code extension designed to simplify your Flutter backend integration process by automatically creating folders and Dart files for you.
+**Neuma API Flutter** is a powerful VS Code extension designed to simplify your Flutter backend integration process by automatically creating folders and Dart files for you.
 
 This extension is suitable for any Dart project. Although it is made to pair seamlessly with [Neuma Base Flutter](https://github.com/abelherl/neuma-base-flutter), this tool allows you to **generate Dart models instantly from JSON**, complete with support for:
 
@@ -12,7 +12,7 @@ This extension is suitable for any Dart project. Although it is made to pair sea
 * Freezed & Equatable (optional)
 * ```copyWith()``` / ```toString()``` generation
 
-Whether you’re building requests or parsing responses, **Neuma API Dart** keeps your workflow rapid, consistent, and efficient.
+Whether you’re building requests or parsing responses, **Neuma API Flutter** keeps your workflow rapid, consistent, and efficient.
 
 ## ⚙️ Features
 
@@ -26,7 +26,7 @@ Whether you’re building requests or parsing responses, **Neuma API Dart** keep
 ### 1. Install the Extension
 From VS Code:
 
-* Search for `Neuma API Dart` in the extensions marketplace and install
+* Search for `Neuma API Flutter` in the extensions marketplace and install
 
 Or via CLI:
 

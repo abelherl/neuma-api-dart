@@ -19,6 +19,81 @@
       }
     ]
   },
+  "configuration": {
+    "title": "Neuma API Dart",
+    "properties": {
+      "neuma-api-dart.defaultBaseFolder": {
+        "type": "string",
+        "default": "lib/data/models",
+        "description": "Default base folder for generated Dart models (e.g., 'lib/data/models', 'lib/models')"
+      },
+      "neuma-api-dart.generateSubfolders": {
+        "type": "boolean",
+        "default": true,
+        "description": "Create subfolders based on class names (e.g., lib/data/models/user_profile/)"
+      },
+      "neuma-api-dart.nullSafety": {
+        "type": "string",
+        "enum": [
+          "nullable",
+          "non-nullable",
+          "auto"
+        ],
+        "default": "auto",
+        "description": "Null safety mode: 'nullable' (String?), 'non-nullable' (String), or 'auto' (detect from JSON)"
+      },
+      "neuma-api-dart.generateJsonAnnotation": {
+        "type": "boolean",
+        "default": true,
+        "description": "Add @JsonKey() annotations from json_annotation package"
+      },
+      "neuma-api-dart.generateFromJson": {
+        "type": "boolean",
+        "default": true,
+        "description": "Generate fromJson() constructor"
+      },
+      "neuma-api-dart.generateToJson": {
+        "type": "boolean",
+        "default": true,
+        "description": "Generate toJson() method"
+      },
+      "neuma-api-dart.generateCopyWith": {
+        "type": "boolean",
+        "default": false,
+        "description": "Generate copyWith() method for immutable updates"
+      },
+      "neuma-api-dart.generateEquatable": {
+        "type": "boolean",
+        "default": false,
+        "description": "Extend Equatable class for value equality (requires equatable package)"
+      },
+      "neuma-api-dart.generateToString": {
+        "type": "boolean",
+        "default": false,
+        "description": "Override toString() method"
+      },
+      "neuma-api-dart.useFreezed": {
+        "type": "boolean",
+        "default": false,
+        "description": "Generate Freezed data classes instead of regular classes (requires freezed package)"
+      },
+      "neuma-api-dart.fieldCase": {
+        "type": "string",
+        "enum": [
+          "camelCase",
+          "snake_case",
+          "preserve"
+        ],
+        "default": "camelCase",
+        "description": "Field naming convention: camelCase (Dart standard), snake_case (API standard), or preserve original"
+      },
+      "neuma-api-dart.addPartStatement": {
+        "type": "boolean",
+        "default": true,
+        "description": "Add part statement for code generation (e.g., part 'user.g.dart';)"
+      }
+    }
+  },
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "npm run check-types && npm run lint && node esbuild.js",

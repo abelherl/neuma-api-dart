@@ -34,7 +34,7 @@ export async function generateSingleModel(): Promise<void> {
     const finalClassName = `${classNameBase}${modelType}`;
 
     // Get extension configuration
-    const config = vscode.workspace.getConfiguration('neuma-api-dart');
+    const config = vscode.workspace.getConfiguration('neuma-api-flutter');
     const baseFolder = config.get<string>('defaultBaseFolder', 'lib/models');
     const generateSubfolders = config.get<boolean>('generateSubfolders', true);
 

@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { GenerationConfig, ModelGenerationOptions } from '../configs/types';
 
 export function getExtensionConfig(): GenerationConfig {
-    const config = vscode.workspace.getConfiguration('neuma-api-dart');
+    const config = vscode.workspace.getConfiguration('neuma-api-flutter');
 
     const modelOptions: ModelGenerationOptions = {
         nullSafety: config.get<'nullable' | 'non-nullable' | 'auto'>('nullSafety', 'auto'),

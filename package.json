@@ -1,5 +1,5 @@
 {
-  "name": "neuma-api-dart",
+  "name": "neuma-api-flutter",
   "displayName": "Neuma API Dart",
   "description": "Transform JSON collection to folders with request and response model",
   "version": "0.0.1",
@@ -14,7 +14,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "neuma-api-dart.generateModel",
+        "command": "neuma-api-flutter.generateModel",
         "title": "Neuma API: Convert JSON to Dart Model"
       }
     ]
@@ -22,17 +22,17 @@
   "configuration": {
     "title": "Neuma API Dart",
     "properties": {
-      "neuma-api-dart.defaultBaseFolder": {
+      "neuma-api-flutter.defaultBaseFolder": {
         "type": "string",
         "default": "lib/data/models",
         "description": "Default base folder for generated Dart models (e.g., 'lib/data/models', 'lib/models')"
       },
-      "neuma-api-dart.generateSubfolders": {
+      "neuma-api-flutter.generateSubfolders": {
         "type": "boolean",
         "default": true,
         "description": "Create subfolders based on class names (e.g., lib/data/models/user_profile/)"
       },
-      "neuma-api-dart.nullSafety": {
+      "neuma-api-flutter.nullSafety": {
         "type": "string",
         "enum": [
           "nullable",
@@ -42,32 +42,32 @@
         "default": "auto",
         "description": "Null safety mode: 'nullable' (String?), 'non-nullable' (String), or 'auto' (detect from JSON)"
       },
-      "neuma-api-dart.generateJsonAnnotation": {
+      "neuma-api-flutter.generateJsonAnnotation": {
         "type": "boolean",
         "default": true,
         "description": "Add @JsonKey() annotations from json_annotation package"
       },
-      "neuma-api-dart.generateCopyWith": {
+      "neuma-api-flutter.generateCopyWith": {
         "type": "boolean",
         "default": false,
         "description": "Generate copyWith() method for immutable updates"
       },
-      "neuma-api-dart.generateEquatable": {
+      "neuma-api-flutter.generateEquatable": {
         "type": "boolean",
         "default": false,
         "description": "Extend Equatable class for value equality (requires equatable package)"
       },
-      "neuma-api-dart.generateToString": {
+      "neuma-api-flutter.generateToString": {
         "type": "boolean",
         "default": false,
         "description": "Override toString() method"
       },
-      "neuma-api-dart.useFreezed": {
+      "neuma-api-flutter.useFreezed": {
         "type": "boolean",
         "default": false,
         "description": "Generate Freezed data classes instead of regular classes (requires freezed package)"
       },
-      "neuma-api-dart.fieldCase": {
+      "neuma-api-flutter.fieldCase": {
         "type": "string",
         "enum": [
           "camelCase",
@@ -77,7 +77,7 @@
         "default": "camelCase",
         "description": "Field naming convention: camelCase (Dart standard), snake_case (API standard), or preserve original"
       },
-      "neuma-api-dart.addPartStatement": {
+      "neuma-api-flutter.addPartStatement": {
         "type": "boolean",
         "default": true,
         "description": "Add part statement for code generation (e.g., part 'user.g.dart';)"

@@ -28,7 +28,7 @@ Download the latest `.vsix` file from the [Releases](https://github.com/abelherl
 
 Then install via CLI:
 ```bash
-code --install-extension neuma-api-dart-x.x.x.vsix
+code --install-extension neuma-api-flutter-x.x.x.vsix
 ```
 
 Or install it from VS Code:

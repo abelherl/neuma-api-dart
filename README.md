@@ -137,9 +137,6 @@ class CreatePostRequest {
 ```
 
 ### 📁 Folder Structure
-
-You can customize the generation folder if you need to.
-
 ```
 📁 lib/
 ├── 📁 models/

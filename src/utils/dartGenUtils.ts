@@ -28,9 +28,11 @@ function generateDartModel(json: any, className: string, generated: Set<string> 
     const toJsonLines: string[] = [];
     const nestedClasses: string[] = [];
 
-    // Determine model type based on class name
     const isRequest = className.toLowerCase().includes('request');
     const isResponse = className.toLowerCase().includes('response');
+
+    // Extract the base name by removing "Request"/"Response"
+    const baseName = className.replace(/(Request|Response)$/i, '');
 
     for (const [key, value] of Object.entries(json)) {
         let type = 'dynamic';
@@ -48,7 +50,8 @@ function generateDartModel(json: any, className: string, generated: Set<string> 
             type = 'dynamic';
         } else if (Array.isArray(value)) {
             if (value.length > 0 && typeof value[0] === 'object' && value[0] !== null) {
-                const nestedClass = `${className}${pascalCase(key)}Item`;
+                // Fixed: Put the suffix after the property name
+                const nestedClass = `${baseName}${pascalCase(key)}${isResponse ? 'Response' : isRequest ? 'Request' : ''}`;
                 type = `List<${nestedClass}>`;
                 parseCode = `(json['${key}'] as List).map((e) => ${nestedClass}.fromJson(e)).toList()`;
                 toJsonCode = `'${key}': ${varName}.map((e) => e.toJson()).toList()`;
@@ -59,7 +62,8 @@ function generateDartModel(json: any, className: string, generated: Set<string> 
                 toJsonCode = `'${key}': ${varName}`;
             }
         } else if (typeof value === 'object') {
-            const nestedClass = `${className}${pascalCase(key)}`;
+            // Fixed: Put the suffix after the property name, not the base name
+            const nestedClass = `${baseName}${pascalCase(key)}${isResponse ? 'Response' : isRequest ? 'Request' : ''}`;
             type = nestedClass;
             parseCode = `${nestedClass}.fromJson(json['${key}'])`;
             toJsonCode = `'${key}': ${varName}.toJson()`;
@@ -73,11 +77,8 @@ function generateDartModel(json: any, className: string, generated: Set<string> 
     }
 
     let methods = '';
-
-    // Generate fromJson for Response models or if neither Request nor Response is specified
     if (isResponse || (!isRequest && !isResponse)) {
         methods += `
-
   factory ${className}.fromJson(Map<String, dynamic> json) {
     return ${className}(
 ${fromJsonLines.join('\n')}
@@ -85,10 +86,8 @@ ${fromJsonLines.join('\n')}
   }`;
     }
 
-    // Generate toJson for Request models or if neither Request nor Response is specified
     if (isRequest || (!isRequest && !isResponse)) {
         methods += `
-
   Map<String, dynamic> toJson() {
     return {
 ${toJsonLines.join('\n')}

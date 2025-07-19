@@ -1,4 +1,4 @@
-![neuma-dart-header](https://res.cloudinary.com/dp3fqnmmg/image/upload/v1752827195/GitHub_-_Neuma_Base_Flutter_1_fpg9be.png)
+![neuma-api-header](https://res.cloudinary.com/dp3fqnmmg/image/upload/v1752945996/GitHub_-_Neuma_API_Flutter_wdopwi.png)
 
 ## ✨ What is Neuma API Flutter?
 
@@ -24,15 +24,18 @@ Whether you’re building requests or parsing responses, **Neuma API Flutter** k
 
 ## 🚀 Getting Started
 ### 1. Install the Extension
-From VS Code:
+Download the latest `.vsix` file from the [Releases](https://github.com/abelherl/neuma-api-flutter/releases) page. 
 
-* Search for `Neuma API Flutter` in the extensions marketplace and install
-
-Or via CLI:
-
+Then install via CLI:
 ```bash
 code --install-extension neuma-api-dart-x.x.x.vsix
 ```
+
+Or install it from VS Code:
+1. Open VS Code
+2. Press ```Ctrl+Shift+P``` (or ```Cmd+Shift+P``` on MacOS)
+3. Type ```>Extensions: Install from VSIX```
+4. Select the downloaded ```.vsix``` file
 
 ### 2. Use the Command
 Press `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows/Linux), then run:

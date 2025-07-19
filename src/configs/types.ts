@@ -3,8 +3,6 @@
 export interface ModelGenerationOptions {
     nullSafety: 'nullable' | 'non-nullable' | 'auto';
     generateJsonAnnotation: boolean;
-    generateFromJson: boolean;
-    generateToJson: boolean;
     generateCopyWith: boolean;
     generateEquatable: boolean;
     generateToString: boolean;

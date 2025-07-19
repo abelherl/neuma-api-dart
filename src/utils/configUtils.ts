@@ -7,8 +7,6 @@ export function getExtensionConfig(): GenerationConfig {
     const modelOptions: ModelGenerationOptions = {
         nullSafety: config.get<'nullable' | 'non-nullable' | 'auto'>('nullSafety', 'auto'),
         generateJsonAnnotation: config.get<boolean>('generateJsonAnnotation', true),
-        generateFromJson: config.get<boolean>('generateFromJson', true),
-        generateToJson: config.get<boolean>('generateToJson', true),
         generateCopyWith: config.get<boolean>('generateCopyWith', false),
         generateEquatable: config.get<boolean>('generateEquatable', false),
         generateToString: config.get<boolean>('generateToString', false),

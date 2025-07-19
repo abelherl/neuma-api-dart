@@ -1,12 +1,11 @@
 import * as vscode from 'vscode';
-import { getExtensionConfig, buildFilePath, convertToSnakeCase } from './configUtils';
+import { getExtensionConfig, buildFilePath } from './configUtils';
 import { generateDartModel } from './dartGenUtils';
 
 export async function generateSingleModel(): Promise<void> {
-    // Get JSON input
     const jsonInput = await vscode.window.showInputBox({
         placeHolder: 'Paste your JSON object here',
-        prompt: 'This should be a valid JSON object (e.g. {"name": "John", "age": 25})',
+        prompt: 'This should be a valid JSON object (e.g. {"name": "John"})',
         validateInput: text => {
             try {
                 JSON.parse(text);
@@ -19,32 +18,44 @@ export async function generateSingleModel(): Promise<void> {
 
     if (!jsonInput) return;
 
-    // Get model type
     const modelType = await vscode.window.showQuickPick(['Request', 'Response'], {
-        placeHolder: 'Select model type'
+        placeHolder: 'Select model type (Request = toJson, Response = fromJson)'
     });
 
     if (!modelType) return;
 
-    // Get class name
     const classNameBase = await vscode.window.showInputBox({
         placeHolder: 'Enter base class name (e.g. UserProfile, LoginAuth, ProductDetails)',
-        prompt: 'This will create the model class and organize it in a folder structure.\n• "UserProfile" → lib/data/models/user_profile/user_profile_request.dart\n• "LoginAuth" → lib/data/models/login_auth/login_auth_response.dart\nUse PascalCase - it will be converted to snake_case for folders and files.'
+        prompt: 'This will create the model class and organize it in a folder structure. For example:\n• "UserProfile" creates models/user_profile/user_profile_request.dart\n• "LoginAuth" creates models/login_auth/login_auth_response.dart\nUse PascalCase - it will be converted to snake_case for folders and files.'
     });
 
     if (!classNameBase) return;
 
-    const config = getExtensionConfig();
     const finalClassName = `${classNameBase}${modelType}`;
-    const relativePath = buildFilePath(config, classNameBase, modelType);
+
+    // Get extension configuration
+    const config = vscode.workspace.getConfiguration('neuma-api-dart');
+    const baseFolder = config.get<string>('defaultBaseFolder', 'lib/models');
+    const generateSubfolders = config.get<boolean>('generateSubfolders', true);
+
+    // Convert PascalCase to snake_case for folder and file names (Dart convention)
+    const folderName = classNameBase.replace(/([A-Z])/g, (match, letter, index) => {
+        return index === 0 ? letter.toLowerCase() : '_' + letter.toLowerCase();
+    });
+
+    const fileName = `${folderName}_${modelType.toLowerCase()}.dart`;
+
+    // Build path based on subfolder setting
+    const relativePath = generateSubfolders
+        ? `${baseFolder}/${folderName}/${fileName}`
+        : `${baseFolder}/${fileName}`;
+
     const json = JSON.parse(jsonInput);
 
-    await createModelFile(json, finalClassName, relativePath, config);
-}
+    // Generate the Dart model (JSON methods are automatically determined by model type)
+    const dartCode = generateDartModel(json, finalClassName);
 
-async function createModelFile(json: any, className: string, relativePath: string, config: any): Promise<void> {
-    const dartCode = generateDartModel(json, className, config.modelOptions);
-
+    // Get the workspace folder
     const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
 
     if (!workspaceFolder) {
@@ -63,7 +74,9 @@ async function createModelFile(json: any, className: string, relativePath: strin
         const fullPath = vscode.Uri.joinPath(workspaceFolder.uri, relativePath);
 
         // Create directories if they don't exist
-        const dirPath = vscode.Uri.joinPath(workspaceFolder.uri, relativePath.substring(0, relativePath.lastIndexOf('/')));
+        const dirPath = generateSubfolders
+            ? vscode.Uri.joinPath(workspaceFolder.uri, `${baseFolder}/${folderName}`)
+            : vscode.Uri.joinPath(workspaceFolder.uri, baseFolder);
         await vscode.workspace.fs.createDirectory(dirPath);
 
         // Write the file
@@ -74,7 +87,8 @@ async function createModelFile(json: any, className: string, relativePath: strin
         const doc = await vscode.workspace.openTextDocument(fullPath);
         await vscode.window.showTextDocument(doc);
 
-        vscode.window.showInformationMessage(`Model created at: ${relativePath}`);
+        const methodInfo = modelType === 'Request' ? 'with toJson() method' : 'with fromJson() method';
+        vscode.window.showInformationMessage(`${modelType} model created at: ${relativePath} ${methodInfo}`);
 
     } catch (error) {
         vscode.window.showErrorMessage(`Failed to create file: ${error}`);

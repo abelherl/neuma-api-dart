@@ -17,10 +17,10 @@ Whether you’re building requests or parsing responses, **Neuma API Flutter** k
 ## ⚙️ Features
 
 * 🔧 Generate Dart models with one command
+   📁 Automatically create and manage folders
 * 🧠 Smart type inference with nested class generation
 * 📦 Support for arrays and objects of any depth
-* 🎯 Choose between **Request** or **Response** generation
-* 🧩 Optional: Freezed, JsonSerializable, Equatable, CopyWith
+* 🎯 Choose between **Request** or **Response** generation 
 
 ## 🚀 Getting Started
 ### 1. Install the Extension
@@ -158,8 +158,9 @@ You can customize the generation folder if you need to.
 ```
 
 ## 🛠️ Future Plans
+* ⏳ Custom generation folder location
+* ⏳ Optional settings for ```copyWith(), Equatable, Freezed```, etc
 * ⏳ Convert from Postman or Swagger JSON collection
-
 
 ## 📄 License
 Licensed under the [MIT License](./LICENSE)

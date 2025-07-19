@@ -4,20 +4,14 @@
 
 **Neuma API Flutter** is a powerful VS Code extension designed to simplify your Flutter backend integration process by automatically creating folders and Dart files for you.
 
-This extension is suitable for any Dart project. Although it is made to pair seamlessly with [Neuma Base Flutter](https://github.com/abelherl/neuma-base-flutter), this tool allows you to **generate Dart models instantly from JSON**, complete with support for:
-
-* `fromJson` and `toJson` for request and response
-* Deeply nested classes
-* CamelCase field conversion
-* Freezed & Equatable (optional)
-* ```copyWith()``` / ```toString()``` generation
+This extension is suitable for any Dart project. Although it is made to pair seamlessly with [Neuma Base Flutter](https://github.com/abelherl/neuma-base-flutter), this tool allows you to **generate Dart models instantly from JSON**.
 
 Whether you’re building requests or parsing responses, **Neuma API Flutter** keeps your workflow rapid, consistent, and efficient.
 
 ## ⚙️ Features
 
 * 🔧 Generate Dart models with one command
-   📁 Automatically create and manage folders
+* 📁 Automatically create and manage folders
 * 🧠 Smart type inference with nested class generation
 * 📦 Support for arrays and objects of any depth
 * 🎯 Choose between **Request** or **Response** generation 

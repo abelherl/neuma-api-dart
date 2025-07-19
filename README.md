@@ -1,71 +1,162 @@
-# neuma-api-dart README
+![neuma-dart-header](https://res.cloudinary.com/dp3fqnmmg/image/upload/v1752827195/GitHub_-_Neuma_Base_Flutter_1_fpg9be.png)
 
-This is the README for your extension "neuma-api-dart". After writing up a brief description, we recommend including the following sections.
+## ✨ What is Neuma API Dart?
 
-## Features
+**Neuma API Dart** is a powerful VS Code extension designed to simplify your Flutter backend integration process by automatically creating folders and Dart files for you.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+This extension is suitable for any Dart project. Although it is made to pair seamlessly with [Neuma Base Flutter](https://github.com/abelherl/neuma-base-flutter), this tool allows you to **generate Dart models instantly from JSON**, complete with support for:
 
-For example if there is an image subfolder under your extension project workspace:
+* `fromJson` and `toJson` for request and response
+* Deeply nested classes
+* CamelCase field conversion
+* Freezed & Equatable (optional)
+* ```copyWith()``` / ```toString()``` generation
 
-\!\[feature X\]\(images/feature-x.png\)
+Whether you’re building requests or parsing responses, **Neuma API Dart** keeps your workflow rapid, consistent, and efficient.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## ⚙️ Features
 
-## Requirements
+* 🔧 Generate Dart models with one command
+* 🧠 Smart type inference with nested class generation
+* 📦 Support for arrays and objects of any depth
+* 🎯 Choose between **Request** or **Response** generation
+* 🧩 Optional: Freezed, JsonSerializable, Equatable, CopyWith
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## 🚀 Getting Started
+### 1. Install the Extension
+From VS Code:
 
-## Extension Settings
+* Search for `Neuma API Dart` in the extensions marketplace and install
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+Or via CLI:
 
-For example:
+```bash
+code --install-extension neuma-api-dart-x.x.x.vsix
+```
 
-This extension contributes the following settings:
+### 2. Use the Command
+Press `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows/Linux), then run:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+```
+Neuma API: Convert JSON to Dart Model
+```
 
-## Known Issues
+You will be prompted to:
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+* Paste your JSON
+* Choose **Request** or **Response**
+* Enter a class name
 
-## Release Notes
+The Dart model is automatically generated and copied to your clipboard! 🥳✨
 
-Users appreciate release notes as you update your extension.
+## 📄 Example: Input & Output
 
-### 1.0.0
+### 🔁 Response Input
+```json
+{
+  "id": 42,
+  "title": "Sample Post",
+  "author": {
+    "id": 1,
+    "name": "Jane Doe"
+  },
+  "tags": ["flutter", "dart"]
+}
+```
 
-Initial release of ...
+### ✅ Generated Dart (Response)
+```dart
+class SampleResponse {
+  final int id;
+  final String title;
+  final SampleAuthorResponse author;
+  final List<String> tags;
 
-### 1.0.1
+  const SampleResponse({
+    required this.id,
+    required this.title,
+    required this.author,
+    required this.tags,
+  });
 
-Fixed issue #.
+  factory SampleResponse.fromJson(Map<String, dynamic> json) {
+    return SampleResponse(
+      id: json['id'],
+      title: json['title'],
+      author: SampleAuthorResponse.fromJson(json['author']),
+      tags: List<String>.from(json['tags']),
+    );
+  }
+}
 
-### 1.1.0
+class SampleAuthorResponse {
+  final int id;
+  final String name;
 
-Added features X, Y, and Z.
+  const SampleAuthorResponse({
+    required this.id,
+    required this.name,
+  });
 
----
+  factory SampleAuthorResponse.fromJson(Map<String, dynamic> json) {
+    return SampleAuthorResponse(
+      id: json['id'],
+      name: json['name'],
+    );
+  }
+}
+```
 
-## Following extension guidelines
+### 📤 Request Input
+```json
+{
+  "title": "Create New Post",
+  "body": "This is the body of the new post",
+  "tags": ["flutter", "api"]
+}
+```
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+### ✅ Generated Dart (Request)
+```dart
+class CreatePostRequest {
+  final String title;
+  final String body;
+  final List<String> tags;
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+  const CreatePostRequest({
+    required this.title,
+    required this.body,
+    required this.tags,
+  });
 
-## Working with Markdown
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'body': body,
+      'tags': tags,
+    };
+  }
+}
+```
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+### 📁 Folder Structure
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+You can customize the generation folder if you need to.
 
-## For more information
+```
+📁 lib/
+├── 📁 models/
+│   ├── 📁 create_post/
+│   │   ├── create_post_request.dart
+│   │   ├── create_post_response.dart
+│   │── 📁 sample/
+│   │   ├── sample_request.dart
+│   │   ├── sample_response.dart
+```
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+## 🛠️ Future Plans
+* ⏳ Convert from Postman or Swagger JSON collection
 
-**Enjoy!**
+
+## 📄 License
+Licensed under the [MIT License](./LICENSE)

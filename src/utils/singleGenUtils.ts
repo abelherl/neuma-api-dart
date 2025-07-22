@@ -33,27 +33,16 @@ export async function generateSingleModel(): Promise<void> {
 
     const finalClassName = `${classNameBase}${modelType}`;
 
-    // Get extension configuration
-    const config = vscode.workspace.getConfiguration('neuma-api-flutter');
-    const baseFolder = config.get<string>('defaultBaseFolder', 'lib/models');
-    const generateSubfolders = config.get<boolean>('generateSubfolders', true);
+    // Get the full extension configuration
+    const config = getExtensionConfig();
 
-    // Convert PascalCase to snake_case for folder and file names (Dart convention)
-    const folderName = classNameBase.replace(/([A-Z])/g, (match, letter, index) => {
-        return index === 0 ? letter.toLowerCase() : '_' + letter.toLowerCase();
-    });
-
-    const fileName = `${folderName}_${modelType.toLowerCase()}.dart`;
-
-    // Build path based on subfolder setting
-    const relativePath = generateSubfolders
-        ? `${baseFolder}/${folderName}/${fileName}`
-        : `${baseFolder}/${fileName}`;
+    // Build the file path using the configuration
+    const relativePath = buildFilePath(config, classNameBase, modelType);
 
     const json = JSON.parse(jsonInput);
 
-    // Generate the Dart model (JSON methods are automatically determined by model type)
-    const dartCode = generateDartModel(json, finalClassName);
+    // Generate the Dart model using full configuration
+    const dartCode = generateDartModel(json, finalClassName, config.modelOptions);
 
     // Get the workspace folder
     const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
@@ -74,9 +63,12 @@ export async function generateSingleModel(): Promise<void> {
         const fullPath = vscode.Uri.joinPath(workspaceFolder.uri, relativePath);
 
         // Create directories if they don't exist
-        const dirPath = generateSubfolders
-            ? vscode.Uri.joinPath(workspaceFolder.uri, `${baseFolder}/${folderName}`)
-            : vscode.Uri.joinPath(workspaceFolder.uri, baseFolder);
+        const dirPath = config.generateSubfolders
+            ? vscode.Uri.joinPath(workspaceFolder.uri, config.baseFolder, classNameBase.replace(/([A-Z])/g, (match, letter, index) => {
+                return index === 0 ? letter.toLowerCase() : '_' + letter.toLowerCase();
+            }))
+            : vscode.Uri.joinPath(workspaceFolder.uri, config.baseFolder);
+
         await vscode.workspace.fs.createDirectory(dirPath);
 
         // Write the file
@@ -87,8 +79,12 @@ export async function generateSingleModel(): Promise<void> {
         const doc = await vscode.workspace.openTextDocument(fullPath);
         await vscode.window.showTextDocument(doc);
 
+        // Create informative success message
+        const features = getActiveFeatures(config.modelOptions);
         const methodInfo = modelType === 'Request' ? 'with toJson() method' : 'with fromJson() method';
-        vscode.window.showInformationMessage(`${modelType} model created at: ${relativePath} ${methodInfo}`);
+        const featureInfo = features.length > 0 ? ` (${features.join(', ')})` : '';
+
+        vscode.window.showInformationMessage(`${modelType} model created at: ${relativePath} ${methodInfo}${featureInfo}`);
 
     } catch (error) {
         vscode.window.showErrorMessage(`Failed to create file: ${error}`);
@@ -100,4 +96,19 @@ export async function generateSingleModel(): Promise<void> {
         });
         vscode.window.showTextDocument(doc);
     }
+}
+
+function getActiveFeatures(options: any): string[] {
+    const features: string[] = [];
+
+    if (options.useFreezed) features.push('Freezed');
+    if (options.generateJsonAnnotation) features.push('JsonAnnotation');
+    if (options.generateCopyWith) features.push('copyWith');
+    if (options.generateEquatable) features.push('Equatable');
+    if (options.generateToString) features.push('toString');
+    if (options.nullSafety === 'nullable') features.push('nullable');
+    if (options.nullSafety === 'non-nullable') features.push('non-nullable');
+    if (options.fieldCase !== 'camelCase') features.push(`${options.fieldCase} fields`);
+
+    return features;
 }

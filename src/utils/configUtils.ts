@@ -6,13 +6,13 @@ export function getExtensionConfig(): GenerationConfig {
 
     const modelOptions: ModelGenerationOptions = {
         nullSafety: config.get<'nullable' | 'non-nullable' | 'auto'>('nullSafety', 'auto'),
-        generateJsonAnnotation: config.get<boolean>('generateJsonAnnotation', true),
+        generateJsonAnnotation: config.get<boolean>('generateJsonAnnotation', false),
         generateCopyWith: config.get<boolean>('generateCopyWith', false),
         generateEquatable: config.get<boolean>('generateEquatable', false),
         generateToString: config.get<boolean>('generateToString', false),
         useFreezed: config.get<boolean>('useFreezed', false),
         fieldCase: config.get<'camelCase' | 'snake_case' | 'preserve'>('fieldCase', 'camelCase'),
-        addPartStatement: config.get<boolean>('addPartStatement', true)
+        addPartStatement: config.get<boolean>('addPartStatement', false)
     };
 
     return {

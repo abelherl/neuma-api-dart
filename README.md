@@ -8,13 +8,14 @@ This extension is suitable for any Dart project. Although it is made to pair sea
 
 Whether you’re building requests or parsing responses, **Neuma API Flutter** keeps your workflow rapid, consistent, and efficient.
 
-## ⚙️ Features
+## 💡 Features
 
-* 🔧 Generate Dart models with one command
+* 🤖 Generate Dart models with one command
 * 📁 Automatically create and manage folders
 * 🧠 Smart type inference with nested class generation
 * 📦 Support for arrays and objects of any depth
-* 🎯 Choose between **Request** or **Response** generation 
+* 🎯 Choose between **Request** or **Response** generation
+* 🔧 Additional [configurations for custom folders and generation settings](#configuration-options)
 
 ## 🚀 Getting Started
 ### 1. Install the Extension

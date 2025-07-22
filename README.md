@@ -148,9 +148,50 @@ class CreatePostRequest {
 │   │   ├── sample_response.dart
 ```
 
+## ⚙️ Configuration Options
+
+You can customize how the extension generates your Dart models via the **VS Code settings UI** by searching for `Neuma API Flutter`. Below are the available options:
+
+### 🔧 General Settings
+
+| Setting               | Description                                                                         | Default           |
+| --------------------- | ----------------------------------------------------------------------------------- | ----------------- |
+| `Add Part Statement`  | Adds `part 'file.g.dart';` for code generation compatibility.                       | `false`           |
+| `Default Base Folder` | Base path where models will be generated.                                           | `lib/data/models` |
+| `Field Case`          | Controls naming style of fields. Options: `camelCase`, `snake_case`, or `original`. | `camelCase`       |
+
+### 🧱 Model Structure
+
+| Setting                    | Description                                                            | Default |
+| -------------------------- | ---------------------------------------------------------------------- | ------- |
+| `Generate Copy With`       | Adds a `copyWith()` method to generated classes.                       | `false` |
+| `Generate Equatable`       | Extends `Equatable` for value equality (requires `equatable` package). | `false` |
+| `Generate JSON Annotation` | Adds `@JsonKey()` decorators (requires `json_annotation`).             | `false` |
+| `Generate Subfolders`      | Organizes output into subfolders per class name.                       | `true`  |
+| `Generate To String`       | Adds a `toString()` override.                                          | `false` |
+
+### 🛡️ Safety & Advanced
+
+| Setting       | Description                                                 | Default    |
+| ------------- | ----------------------------------------------------------- | ---------- |
+| `Null Safety` | Handles nullability: `nullable`, `non-nullable`, or `auto`. | `auto`     |
+| `Use Freezed` | Uses the `freezed` package instead of regular classes.      | `false`    |
+
+
+Or add it directly in your `settings.json`:
+
+```json
+{
+  "neuma-api-flutter.defaultBaseFolder": "lib/data/models",
+  "neuma-api-flutter.fieldCase": "camelCase",
+  "neuma-api-flutter.generateCopyWith": true,
+  ...
+}
+```
+
 ## 🛠️ Future Plans
-* ⏳ Custom generation folder location
-* ⏳ Optional settings for ```copyWith(), Equatable, Freezed```, etc
+* ✅ Custom generation folder location
+* ✅ Optional settings for ```copyWith(), Equatable, Freezed```, etc
 * ⏳ Convert from Postman or Swagger JSON collection
 
 ## 📄 License

@@ -2,7 +2,7 @@
   "name": "neuma-api-flutter",
   "displayName": "Neuma API Flutter",
   "description": "Transform JSON collection to folders with request and response model",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/abelherl/neuma-api-flutter.git"
